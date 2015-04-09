@@ -58,8 +58,14 @@ pfile.data = fread(fid,inf,precision); % would be nice to make this single preci
 fclose(fid);
 
 % Make data complex (real and imaginary parts alternate in pfile)
-pfile.data = complex(pfile.data(1:2:end),pfile.data(2:2:end));
-
+revision = floor(pfile.rdb.rdb_hdr_rdbm_rev);
+if(revision == 15)
+    pfile.data = complex(pfile.data(1:2:end),-pfile.data(2:2:end));
+elseif(revision == 11)
+    pfile.data = complex(pfile.data(1:2:end),pfile.data(2:2:end));
+else
+    error('Only GE rev 11 and 15 are currently supported');
+end
 % Reshape into [npts x frames]
 npts = pfile.rdb.rdb_hdr_frame_size;%view points
 nframes  = length(pfile.data(:))/npts;
