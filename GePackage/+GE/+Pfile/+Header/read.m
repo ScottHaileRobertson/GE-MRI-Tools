@@ -46,15 +46,15 @@ eval(main_header_cmd);
 
 % Add the exam header
 main_exam_cmd = ['pfile.exam = GE.Pfile.Header.RDB' num2str(revision) ...
-    '.exam_' num2str(revision) '(pfile_name,0);'];
+    '.exam_' num2str(revision) '(pfile_name,pfile.rdb.rdb_hdr_off_exam);'];
 eval(main_exam_cmd);
 
 % Add the series header
 main_series_cmd = ['pfile.series = GE.Pfile.Header.RDB' num2str(revision) ...
-    '.series_' num2str(revision) '(pfile_name,0);'];
+    '.series_' num2str(revision) '(pfile_name,pfile.rdb.rdb_hdr_off_series);'];
 eval(main_series_cmd);
 
 % Add the image header
 main_image_cmd = ['pfile.image = GE.Pfile.Header.RDB' num2str(revision) ...
-    '.image_' num2str(revision) '(pfile_name,0);'];
+    '.image_' num2str(revision) '(pfile_name,pfile.rdb.rdb_hdr_off_image);'];
 eval(main_image_cmd);
