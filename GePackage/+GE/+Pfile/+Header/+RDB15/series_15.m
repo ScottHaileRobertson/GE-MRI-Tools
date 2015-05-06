@@ -1,4 +1,4 @@
-function strct = ge_read_series_header_rdb15(pfile_name,offset)
+function strct = ge_read_series_header(pfile_name,offset)
 
 
 % Open the PFile
@@ -7,7 +7,7 @@ if (fid == -1)
 	error(sprintf('Could not open %s file.',pfile_name));
 end
 
-% apply offset
+% start at correct offset
 fseek(fid,offset,'bof');
 
 strct = struct('base_p_file',pfile_name);
