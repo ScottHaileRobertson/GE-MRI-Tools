@@ -28,7 +28,7 @@ end
 
 % Check for revision
 revision = [];
-if(nargin > 2)
+if(nargin >= 2)
     revision = varargin{2};
 end
 
@@ -59,12 +59,15 @@ fclose(fid);
 
 % Make data complex (real and imaginary parts alternate in pfile)
 revision = floor(pfile.rdb.rdb_hdr_rdbm_rev);
-if(revision == 15)
-    pfile.data = complex(pfile.data(1:2:end),-pfile.data(2:2:end));
-elseif(revision == 11)
+if(revision == 11)
     pfile.data = complex(pfile.data(1:2:end),pfile.data(2:2:end));
 else
-    error('Only GE rev 11 and 15 are currently supported');
+    if(revision == 15)
+        pfile.data = complex(pfile.data(1:2:end),-pfile.data(2:2:end));
+    else
+        pfile.data = complex(pfile.data(1:2:end),-pfile.data(2:2:end));
+        warning('Only GE rev 11 and 15 are currently supported, pretending its 15x');
+    end
 end
 % Reshape into [npts x frames]
 npts = pfile.rdb.rdb_hdr_frame_size;%view points
